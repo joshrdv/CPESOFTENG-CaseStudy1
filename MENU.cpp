@@ -14,11 +14,11 @@ void input_project(){
 	char c,title[100];
 	
 	myfile.open("inputs.txt");
-   //yfile.get(c);
+
    	while (myfile) {
-    	while (myfile && c != '\n') {
-       		myfile.get(c);
-     	}
+    		while (myfile && c != '\n') {
+       			myfile.get(c);
+     		}
 		id++;
 		myfile.get(c);
    	}
