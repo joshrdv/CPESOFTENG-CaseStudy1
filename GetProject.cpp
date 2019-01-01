@@ -6,7 +6,7 @@
 using namespace std;
 
 // Initial declaration ng functions para di mag-error
-void displayTextFile();
+void displayTextFile(char* file1);
 void CopyFile(char* file1, char* file2);
 void CopyFileWithoutLine1(char* file1, char* file2);
  
@@ -45,8 +45,9 @@ int main () {
 	if(choice==4){
 		//-------------------------------------------------------------------------------
 		// Display the scheduled queue and open the file to get topmost project from schedule queue
-		cout << '\n';
-		//GetTopMostSchedule();
+		cout << "\nContent of sched.txt\n";
+		displayTextFile("sched.txt");
+		cout << "\n\nTopmost schedule from sched.txt\n";
 		ifstream readfile("sched.txt"); //Eto daw filename ni Em
 		string Line1;
 		
@@ -58,7 +59,8 @@ int main () {
 	
 	  	readfile.close();
 	  	
-		cout << "\nTopmost project from the queue has been removed.\n\n";
+		cout << "\n\nTopmost project from the queue has been removed.\n\n";
+		cout << "Copy progress:\n";
 		CopyFileWithoutLine1("sched.txt", "temp.txt");
 		CopyFile("temp.txt", "sched.txt");
 		cout<<'\n';
@@ -72,6 +74,7 @@ int main () {
 		// Write details to completedlist file func
 		complist << '\n' << Line1;
 		complist.close();
+		cout << "\nCopy progress:\n";
 		CopyFile("completedlist.txt", "temp.txt");
 		
 		cout<<"\n";
@@ -79,27 +82,35 @@ int main () {
 		
 		//-------------------------------------------------------------------------------
 		// Display the schedule queue but this time without the topmost project
-		displayTextFile();
+		cout << "\nThe sched.txt queue without the topmost project\n";
+		displayTextFile("sched.txt");
 		
 		cout<<"\n";
 		system("pause");
 	}
 }
 
-void displayTextFile() {
-	string name;
-	int count;
-    std::ifstream dataFile("completedlist.txt");
-    while (!dataFile.fail() && !dataFile.eof() )
+void displayTextFile(char* file1) {
+	char line[255];
+    ifstream dataFile;
+	dataFile.open(file1,ios::in);
+	
+	while(!dataFile.eof()){
+        dataFile.getline(line,255,'\n');
+        cout<<line<<endl;
+    }
+    
+    /*while (!dataFile.fail() && !dataFile.eof() )
     {
           dataFile >> name ;
-          cout << name + "\t";
+          cout << name;
           count++;
           if (count==5){
           	cout<<"\n";
           	count=0;
 		  }
-    }
+    }*/
+    dataFile.close();
     return;
 }
 
